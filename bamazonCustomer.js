@@ -74,3 +74,11 @@ function makePurchase(product, quantity) {
 
 
 // checkInventory
+function checkInventory(choiceID, inventory) {
+    for (var i = 0; i < inventory.length; i++) {
+        if (inventory[i].id === choiceID) {
+            return inventory[i];
+        }
+    }
+    return null;
+};
