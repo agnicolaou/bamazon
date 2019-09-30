@@ -65,5 +65,12 @@ function askForQuantity(userChoice) {
 };
 
 // makepurchase
+function makePurchase(product, quantity) {
+    connection.query("UPDATE products SET stock_qty = stock_qty - ? WHERE id = ?", [quantity, product.id], function (err, res) {
+        console.log("You purchased " + quantity + " " + product.product_name + "'s");
+        importData();
+    })
+}
+
 
 // checkInventory
