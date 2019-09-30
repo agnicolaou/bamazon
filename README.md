@@ -10,7 +10,7 @@ Welcome to the Bamazon app where you can choose a product from an online shop, a
 
 ### SCREEN SHOTS
 
-![concert-this screenshot](images/concertthis.png)
-![spotify-this-song screenshot](images/spotifythissong.png)
-![movie-this screenshot](images/moviethis.png)
-![do-what-it-says screenshot](images/dowhatitsays.png)
+![choose-product screenshot](images/choose%20product.png)
+![choose-qty screenshot](images/choose%20qty.png)
+![view-updated-inventory screenshot](images/inventory%20update.png)
+![out-of-stock screenshot](images/no%20stock.png)
