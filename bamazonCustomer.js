@@ -18,11 +18,11 @@ connection.connect(function (err) {
 function importData() {
     connection.query("SELECT * FROM products", function (err, response) {
         console.table(response);
-        prompt();
+        prompt(response);
     });
 }
 
-function prompt() {
+function prompt(inventory) {
     inquirer
         .prompt([
             {
@@ -47,23 +47,22 @@ function prompt() {
 // askForQuantity
 function askForQuantity(userChoice) {
     inquirer
-    .prompt([
-        {
-            type: "input",
-            name: "qty",
-            message: "How many would you like to order?"
-        }
-    ]).then(function(response){
-        var quantity = parseInt(response.qty);
-        if (quantity > userChoice.stock_qty){
-            console.log("Sorry, not enough in stock.");
-            importData();
-        } else {
-            makePurchase(product, quantity)
-        }
-    })
+        .prompt([
+            {
+                type: "input",
+                name: "qty",
+                message: "How many would you like to order?"
+            }
+        ]).then(function (response) {
+            var quantity = parseInt(response.qty);
+            if (quantity > userChoice.stock_qty) {
+                console.log("Sorry, not enough in stock.");
+                importData();
+            } else {
+                makePurchase(userChoice, quantity)
+            }
+        })
 };
-
 
 // makepurchase
 
