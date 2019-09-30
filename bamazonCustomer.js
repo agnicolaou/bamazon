@@ -18,11 +18,11 @@ connection.connect(function (err) {
 function importData() {
     connection.query("SELECT * FROM products", function (err, response) {
         console.table(response);
-        prompt();
+        prompt(response);
     });
 }
 
-function prompt() {
+function prompt(inventory) {
     inquirer
         .prompt([
             {
@@ -47,24 +47,35 @@ function prompt() {
 // askForQuantity
 function askForQuantity(userChoice) {
     inquirer
-    .prompt([
-        {
-            type: "input",
-            name: "qty",
-            message: "How many would you like to order?"
-        }
-    ]).then(function(response){
-        var quantity = parseInt(response.qty);
-        if (quantity > userChoice.stock_qty){
-            console.log("Sorry, not enough in stock.");
-            importData();
-        } else {
-            makePurchase(product, quantity)
-        }
-    })
+        .prompt([
+            {
+                type: "input",
+                name: "qty",
+                message: "How many would you like to order?"
+            }
+        ]).then(function (response) {
+            var quantity = parseInt(response.qty);
+            if (quantity > userChoice.stock_qty) {
+                console.log("Sorry, not enough in stock.");
+                importData();
+            } else {
+                makePurchase(userChoice, quantity)
+            }
+        })
 };
 
+function makePurchase(product, quantity) {
+    connection.query("UPDATE products SET stock_qty = stock_qty - ? WHERE id = ?", [quantity, product.id], function (err, res) {
+        console.log("You purchased " + quantity + " " + product.product_name + "'s");
+        importData();
+    })
+}
 
-// makepurchase
-
-// checkInventory
+function checkInventory(choiceID, inventory) {
+    for (var i = 0; i < inventory.length; i++) {
+        if (inventory[i].id === choiceID) {
+            return inventory[i];
+        }
+    }
+    return null;
+};
